@@ -16,6 +16,8 @@
 
 const Parse = require('parse/node').Parse;
 
+const logger = require('../logger').logger;
+
 const defaultColumns = Object.freeze({
   // Contain the default columns for every parse object type (except _Join collection)
   _Default: {
@@ -804,6 +806,8 @@ export default class SchemaController {
       throw new Parse.Error(Parse.Error.OPERATION_FORBIDDEN,
         `Permission denied for action ${operation} on class ${className}.`);
     }
+
+    logger.info(JSON.stringify(classPerms[permissionField]));
 
     // Process the readUserFields later
     if (Array.isArray(classPerms[permissionField]) && classPerms[permissionField].length > 0) {
